@@ -1,0 +1,63 @@
+
+.body {
+  justify-content: center;
+  align-items: center;
+  place-content: center;
+}
+.ulBlock,ul{
+  color: white;
+  display: flex;
+  gap: 5rem;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  flex-direction: row;
+  background-color: rgb(4, 4, 4);
+  width: 95%;
+}
+.liBlock,li , .Route{
+  background-color: rgb(4, 4, 4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: blue;
+  color: aliceblue;
+  background-color: rgb(15, 15, 34);;
+  
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(0, 8, 91);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color:  rgb(15, 15, 34);
+  border-radius: 25px;
+  border: 1.5px solid rgb(0, 8, 91);
+  scroll-behavior: smooth;
+}
+.alertbox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(219, 188, 188);
+  color: black;
+  padding: 25px;
+}
+button
+{
+  border-radius: 5px;
+  padding: 5px;
+  width: 50px;
+  cursor:pointer;
+  text-align: center;
+  background-color: aliceblue;
+  color: black;
+}

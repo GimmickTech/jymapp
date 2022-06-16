@@ -1,0 +1,7 @@
+.spens{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 55px;
+    padding: 10px;
+}
