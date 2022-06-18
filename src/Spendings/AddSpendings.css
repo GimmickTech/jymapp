@@ -2,16 +2,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width:60vw;
+    margin-bottom: 30px;
 }
 form{
     display: flex;
-    margin: 15px;
+    justify-content: center;
     align-content:center ;
     background-color: rgb(19, 19, 54);
     color: aliceblue;
     padding: 10px;
     text-align: center;
-    width: fit-content;
+    
 }
 .pn{
     background-color: rgb(19, 19, 54);
@@ -25,9 +27,13 @@ input{
     padding: 5px;
 }
 .spens{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   
     background-color: rgb(19, 19, 54);
      padding: 10px;
+ }
+ .buttons{
+    width: fit-content;
+    background-color: rgb(101, 130, 156);
+  color: White;
+    padding: 10px 30px;
  }

@@ -30,7 +30,7 @@ const Signin = () => {
   };
   const invalid = !validForm && touchedForm;
   return (
-    <div className="spendiv">
+    <div className="spendivs">
     <form action="" className="formsign" onSubmit={signinForm}>
       <div className="liSign">
         <h2>SIGN UP</h2>
@@ -46,7 +46,7 @@ const Signin = () => {
       </div>
       {invalid && (
         <div className="alertbox">
-          <p className="inv">Invalid Form</p>
+          <p className="inv">Invalid User</p>
         </div>
       )}
       <div className="liSign">

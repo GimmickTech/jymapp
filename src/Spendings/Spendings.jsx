@@ -2,37 +2,47 @@ import React, { useState } from "react";
 import "../Spendings/Spendings.css";
 
 const Spendings = (props) => {
-  const [label, setLabel] = useState('Edit');
+  const [label, setLabel] = useState("Edit");
   const [title, setTitle] = useState(props.title);
   //const [del, setDel] = useState(props.title);
-  
+
   const updatedTitle = (event) => {
     setTitle(event.target.value);
-    console.log(props.title)
+    console.log(props.title);
   };
-  const deleteItem = ()=>{
-    props.onDelete(props.title);
-   
-  }
+  const deleteItem = () => {
+    props.onDelete(props.index);
+  };
   return (
- 
-    <div className="spens">
-      <div>{props.date.toDateString()}</div>
+    <div className="spends">
+      <table>
+        <tbody>
+          <tr>
+            <td>{props.date.toDateString()}</td>
+            {label === "Edit" ? (
+              <td>{props.title}</td>
+            ) : (
+              <td>
+                <input type="text" onChange={updatedTitle} />
+              </td>
+            )}
+            <td>{props.cash}</td>
+          </tr>
+        </tbody>
+      </table>
       {label === "Edit" ? (
-        <div>{title}</div>
+        <button className="button" onClick={() => setLabel("Update")}>Edit</button>
       ) : (
-        <input type="text" onChange={updatedTitle} />
+        <button className="button" onClick={() => setLabel("Edit")}>Update</button>
       )}
-      <div>{props.cash}</div>
-      {label === "Edit" ? (
-        <button onClick={() => setLabel("Update")}>Edit</button>
+      {label !== "Edit" ? (
+        <button className="button disabled" onClick={deleteItem}  disabled>
+          Delete
+        </button>
       ) : (
-        <button onClick={() => setLabel("Edit")}>Update</button>
+        <button className="button" onClick={deleteItem}>Delete</button>
       )}
-      <button onClick={deleteItem}>Delete</button>
-      <br />
     </div>
-   
   );
 };
 export default Spendings;

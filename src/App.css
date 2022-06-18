@@ -1,9 +1,4 @@
 
-.body {
-  justify-content: center;
-  align-items: center;
-  place-content: center;
-}
 .ulBlock,ul{
   color: white;
   display: flex;
@@ -13,19 +8,35 @@
   padding: 25px;
   flex-direction: row;
   background-color: rgb(4, 4, 4);
-  width: 95%;
+  width: 96vw;
+ 
 }
-.liBlock,li , .Route{
+.ulBlock{
+  position:sticky;
+  top:0; 
+}
+.liBlock,li , .Route {
   background-color: rgb(4, 4, 4);
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 15px;
+  
+}
+.inpSearch{
+  background-color: aliceblue;
+}
+.searchField{
+  display: inline;
+  margin: 20px;
+  position: absolute;
+  border-style: solid;
 }
 * {
   scrollbar-width: thin;
   scrollbar-color: blue;
   color: aliceblue;
-  background-color: rgb(15, 15, 34);;
+  background-color: rgb(15, 15, 34);
   
 }
 
@@ -53,11 +64,12 @@
 }
 button
 {
+  margin: 20px;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   width: 50px;
   cursor:pointer;
   text-align: center;
-  background-color: aliceblue;
-  color: black;
+  background-color: rgb(101, 130, 156);
+  color: White;
 }
