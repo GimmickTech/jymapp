@@ -1,4 +1,4 @@
-import react, { useRef, useState } from "react";
+import { useState } from "react";
 import Spendings from "./Spendings/Spendings";
 import "./App.css";
 import AddSpendings from "./Spendings/AddSpendings";
@@ -59,10 +59,12 @@ export default function App() {
   const yearToFilter = (event) => {
     setSearch(false);
     var filteredArr = expense.filter((expenses) => {
-      if (expenses.date.getFullYear().toString() === event) return expenses;
-      if (event === "all") {
+      if (expenses.date.getFullYear().toString() === event) 
+      return expenses;
+      else if (event === "all") {
         return expenses;
       }
+      else return
     });
     setFilExpense(filteredArr);
   };
@@ -74,6 +76,7 @@ export default function App() {
     let searchword =  event.target.value.split(" ").join("").toLowerCase();
     let search = expense.filter((expense) => {
       if (expense.title.toLowerCase().includes(searchword)) return expense;
+      else return
     });
     console.log(search);
     setFilExpense(search)

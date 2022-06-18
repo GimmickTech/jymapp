@@ -20,7 +20,7 @@ const Spendings = (props) => {
           <tr>
             <td>{props.date.toDateString()}</td>
             {label === "Edit" ? (
-              <td>{props.title}</td>
+              <td>{title}</td>
             ) : (
               <td>
                 <input type="text" onChange={updatedTitle} />
