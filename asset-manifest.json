@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/jymapp/static/css/main.481c6644.css",
+    "main.js": "/jymapp/static/js/main.0cc7fa25.js",
+    "static/js/787.448a7bec.chunk.js": "/jymapp/static/js/787.448a7bec.chunk.js",
+    "index.html": "/jymapp/index.html",
+    "main.481c6644.css.map": "/jymapp/static/css/main.481c6644.css.map",
+    "main.0cc7fa25.js.map": "/jymapp/static/js/main.0cc7fa25.js.map",
+    "787.448a7bec.chunk.js.map": "/jymapp/static/js/787.448a7bec.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.481c6644.css",
+    "static/js/main.0cc7fa25.js"
+  ]
+}
