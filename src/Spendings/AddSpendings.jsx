@@ -1,13 +1,11 @@
 import { useState } from "react";
 import "../../src/Spendings/AddSpendings.css";
-import { Button } from "@mui/material";
 
 function AddSpendings(props) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const updateTitle = (event) => {
-    console.log(event.target.value)
     setTitle(event.target.value);
   };
   const updateAmount = (event) => {
@@ -31,10 +29,9 @@ function AddSpendings(props) {
   };
   return (
     <div className="spendiv">
-      <form onSubmit={addedSpend}>
-        <fieldset>
+       <fieldset >
           <legend > Add New Spendings</legend>
-       
+      <form onSubmit={addedSpend}>
         <div className="liSign">
           <p className="spens">Spendings</p>
           <input type="text" value={title} required onChange={updateTitle} />
@@ -58,8 +55,8 @@ function AddSpendings(props) {
             Submit
           </button>
         </div>
-        </fieldset>
       </form>
+        </fieldset>
       {/* <iframe src="https://justees.netlify.app/" frameborder="0" allowFullScreen="true"></iframe> */}
     </div>
   );

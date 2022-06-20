@@ -1,70 +1,84 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Spendings from "./Spendings/Spendings";
 import "./App.css";
+import api from "./api/expenses";
 import AddSpendings from "./Spendings/AddSpendings";
 import Filter from "./Spendings/Filter";
 import Navbar from "./Spendings/Navbar";
 import { Routes, Route, Navigate } from "react-router-dom";
-import About from "./Navs/About";
-import Profile from "./Navs/Profile";
+// import About from "./Navs/About";
+// import Profile from "./Navs/Profile";
 import Signin from "./User/Signin";
 import React from "react";
-import './Spendings/Spendings.css'
+import "./Spendings/Spendings.css";
 
 export default function App() {
-  var dummy = [
-    { id: "01", title: "Meal", amount: "10", date: new Date(2022, 5, 12) },
-    { id: "02", title: "Job", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "03", title: "Ml", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "04", title: "ash", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "05", title: "nir", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "06", title: "Meal", amount: "10", date: new Date(2022, 5, 12) },
-    { id: "07", title: "Job", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "08", title: "Ml", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "09", title: "ash", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "10", title: "nir", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "11", title: "Meal", amount: "10", date: new Date(2022, 5, 12) },
-    { id: "12", title: "Job", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "13", title: "Ml", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "14", title: "ash", amount: "10", date: new Date(2020, 5, 12) },
-    { id: "15", title: "nir", amount: "10", date: new Date(2019, 5, 12) },
-  ];
-  var [expense, setExpense] = useState(dummy);
-  var [filExpense, setFilExpense] = useState(dummy);
+  var [expense, setExpense] = useState([]);
+  var [filExpense, setFilExpense] = useState(expense);
   let [search, setSearch] = useState(false);
   let [searchItem, setSearchItem] = useState("");
-  // var searchInput = useRef();
+  // let [addSpen, setAddSpen] = useState(false);
+  
+
+  useEffect(() => {
+    const exp = async () => {
+      return await api
+        .get("/expenses")
+        .then((response) =>
+          response.data.map((user) => ({
+            id: `${user.id}`,
+            title: `${user.title}`,
+            amount: `${user.amount}`,
+            date: new Date(`${user.date}`),
+          }))
+        )
+        .then((user) => {
+          setSearch(false);
+          if (user) {
+            setExpense((expense) => {
+              return [user, ...expense];
+            })
+            setFilExpense(user)
+          }
+        })
+        .catch((err) => console.log("Api" + err));
+    };
+    exp();
+  }, []);
+
   let toggleDark = (event) => {
-    console.log(event);
     if (event === "Dark") {
       document.getElementById("navbar").style.backgroundColor = "black";
       document.getElementById("navbar").style.color = "white";
-      console.log(document.getElementById("navbar").style.color);
     } else if (event === "Light") {
       document.getElementById("navbar").style.backgroundColor = "white";
       document.getElementById("navbar").style.color = "black";
-      console.log(document.getElementById("navbar").style.color);
     }
   };
-  var addNewSpendings = (expense) => {
-    setFilExpense((before) => {
-      return [expense, ...before];
-    });
+  var addNewSpendings = async (expense) => {
+    // let exp = (before) => {
+    //   return [expense, ...before];
+    // };
+    const response = await api.post("/expenses", expense);
+    console.log(response);
+    setExpense(expense, ...response);
+    setFilExpense(expense, ...response);
+    // setAddSpen(false);
   };
   var deleteExpense = (index) => {
+   // await api.delete(`/expenses/${index}`)
+   console.log(index)
     var newExpense = expense;
-    newExpense.splice(index, 1);
-    setFilExpense([...newExpense]);
+    console.log(newExpense.slice(index,1))
+     setFilExpense([...newExpense]);
   };
   const yearToFilter = (event) => {
     setSearch(false);
     var filteredArr = expense.filter((expenses) => {
-      if (expenses.date.getFullYear().toString() === event) 
-      return expenses;
+      if (expenses.date.getFullYear().toString() === event) return expenses;
       else if (event === "all") {
         return expenses;
-      }
-      else return
+      } else return;
     });
     setFilExpense(filteredArr);
   };
@@ -73,43 +87,66 @@ export default function App() {
     event.preventDefault();
     setSearch(true);
     setSearchItem(event.target.value);
-    let searchword =  event.target.value.split(" ").join("").toLowerCase();
+    let searchword = event.target.value.split(" ").join("").toLowerCase();
     let search = expense.filter((expense) => {
       if (expense.title.toLowerCase().includes(searchword)) return expense;
-      else return
+      else return;
     });
-    console.log(search);
-    setFilExpense(search)
+    setFilExpense(search);
     setSearch(false);
     event.current.value = "";
   };
   return (
     <div className="table">
       <Navbar onDarkMode={toggleDark} />
-
-      <Signin />
-
       <Routes>
-        <Route path="/" element={<Navigate to="/profile" />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
-        <Route path="/about" element={<About />}></Route>
+        <Route path="/" element={<Navigate to="/home/*" />}></Route>
+        <Route path="/profile" element={<Signin />}></Route>
+        <Route path="/home" element={<App />}></Route>
+        <Route
+          path="/add-spendings"
+          element={
+            <AddSpendings
+              onAddSpendings={addNewSpendings}
+            />
+          }
+        ></Route>
       </Routes>
-      <AddSpendings onAddSpendings={addNewSpendings} />
-
       <div className="ulBlock" id="navbar">
         <p className="liBlock">Date</p>
         <p className="liBlock">Spendings</p>
         <p className="liBlock">Amount</p>
-
-      <input className="liBlock , inpSearch" type="text" value={searchItem} placeholder="Search For Expense" onChange={searchTitle} />
+        <input
+          className="liBlock , inpSearch"
+          type="text"
+          value={searchItem}
+          placeholder="Search For Expense"
+          onChange={searchTitle}
+        />
         <Filter onFilter={yearToFilter} />
       </div>
+      {/* <div className="addSp">
+        {addSpen ? (
+          <AddSpendings onAddSpendings={addNewSpendings}  />
+        ) : (
+          <button
+            onClick={() => {
+              setAddSpen(true);
+            }}
+          >
+            Add New Spendings
+          </button>
+        )}
+      </div> */}
+      <hr className="hr" />
       {/* <form className="searchField" onSubmit={searchTitle}> */}
 
       {/* <button className="button" type="submit"> Search</button> */}
       {/* </form> */}
       {filExpense.length <= 0 && (
-        <div className="alertbox hei">No Expenses found</div>
+        <div className="alertbox hei">
+          <h1>No Expenses found</h1>
+        </div>
       )}
       {!search &&
         filExpense.map((expenses, index) => (

@@ -1,7 +1,7 @@
 import "../Spendings/Filter.css";
 
 const filter = (props) => {
-  let filterYear
+  let filterYear=''
   return (
     <div>
       <label htmlFor=""> Expenses Filter : </label>

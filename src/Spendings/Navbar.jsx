@@ -7,8 +7,9 @@ const Navbar = (props) => {
   return (
     <div>
       <ul className="ulNav">
-        <NavLink to="/about">About</NavLink>
+        <NavLink to="/home">Home</NavLink>
         <NavLink to="/profile">Profile</NavLink>
+        <NavLink to="add-spendings">Add Expense</NavLink>
         {dark==="light" ?  <li className="toggler" onClick={()=>{props.onDarkMode("Dark");setDark("dark")}}>
         Dark Mode
         </li> :<li className="toggler" onClick={()=>{props.onDarkMode("Light");setDark("light")}}>

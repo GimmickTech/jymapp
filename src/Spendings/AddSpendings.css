@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     width:60vw;
     margin-bottom: 30px;
 }
@@ -36,4 +37,8 @@ input{
     background-color: rgb(101, 130, 156);
   color: White;
     padding: 10px 30px;
+ }
+ fieldset{
+    border-radius: 5px;
+    border-color: rgb(101, 130, 156);
  }
