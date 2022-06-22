@@ -75,6 +75,7 @@ export default function App() {
       if (expense.id !== id) {
         return expense;
       }
+      else return console.log("NoExpense");
     });
     setSearch(false);
     setExpense(del);
@@ -87,7 +88,8 @@ export default function App() {
       if (expenses.date.getFullYear().toString() === event) return expenses;
       else if (event === "all") {
         return expenses;
-      } else return;
+      } 
+      else return console.log("NoExpense");
     });
     setFilExpense(filteredArr);
   };
@@ -101,7 +103,7 @@ export default function App() {
 
     let search = expense.filter((expense) => {
       if (expense.title.toLowerCase().includes(searchword)) return expense;
-      else return;
+      else return console.log("NoExpense");
     });
     console.log(search);
     await setFilExpense(search);
