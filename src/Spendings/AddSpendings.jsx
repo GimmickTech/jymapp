@@ -12,7 +12,9 @@ function AddSpendings(props) {
     setAmount(event.target.value);
   };
   const updateDate = (event) => {
-    setDate(event.target.value);
+    const date = event.target.value
+    // const dateString= date.toISOstring();
+    setDate(date);
   };
   const addedSpend = (event) => {
     event.preventDefault();
@@ -20,8 +22,9 @@ function AddSpendings(props) {
       id: Math.floor(Math.random() * 101),
       title: title,
       amount: amount,
-      date: new Date(date),
+      date: date,
     };
+    console.log(date)
     props.onAddSpendings(spendings);
     setTitle("");
     setAmount("");

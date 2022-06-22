@@ -17,35 +17,31 @@ export default function App() {
   var [filExpense, setFilExpense] = useState(expense);
   let [search, setSearch] = useState(false);
   let [searchItem, setSearchItem] = useState("");
-  // let [addSpen, setAddSpen] = useState(false);
-  
 
   useEffect(() => {
-    const exp = async () => {
-      return await api
-        .get("/expenses")
-        .then((response) =>
-          response.data.map((user) => ({
-            id: `${user.id}`,
-            title: `${user.title}`,
-            amount: `${user.amount}`,
-            date: new Date(`${user.date}`),
-          }))
-        )
-        .then((user) => {
-          setSearch(false);
-          if (user) {
-            setExpense((expense) => {
-              return [user, ...expense];
-            })
-            setFilExpense(user)
-          }
-        })
-        .catch((err) => console.log("Api" + err));
-    };
     exp();
   }, []);
-
+  async function  exp()  {
+    return await api
+      .get("/expenses")
+      .then((response) =>
+        response.data.map((user) => ({
+          id: `${user.id}`,
+          title: `${user.title}`,
+          amount: `${user.amount}`,
+          date: new Date(`${user.date}`),
+        }))
+      )
+      .then((user) => {
+        console.log("ash")
+        setSearch(false);
+        if (user) {
+          setExpense(user);
+          setFilExpense(user);
+        }
+      })
+      .catch((err) => console.log("Api" + err));
+  };
   let toggleDark = (event) => {
     if (event === "Dark") {
       document.getElementById("navbar").style.backgroundColor = "black";
@@ -55,22 +51,35 @@ export default function App() {
       document.getElementById("navbar").style.color = "black";
     }
   };
-  var addNewSpendings = async (expense) => {
-    // let exp = (before) => {
-    //   return [expense, ...before];
-    // };
-    const response = await api.post("/expenses", expense);
-    console.log(response);
-    setExpense(expense, ...response);
-    setFilExpense(expense, ...response);
-    // setAddSpen(false);
+  var addNewSpendings = async (expenseNew) => {
+    setSearch(false)
+    console.log(expenseNew)
+    await api.post("/expenses", expenseNew).then((response) => {
+      setExpense((prev) => {
+        return [...prev, response.data];
+        // return vvar.reverse();
+      });
+      setFilExpense((prev) => {
+        const vvar = [...prev, response.data];
+        return vvar.reverse();
+      });
+    });
   };
-  var deleteExpense = (index) => {
-   // await api.delete(`/expenses/${index}`)
-   console.log(index)
-    var newExpense = expense;
-    console.log(newExpense.slice(index,1))
-     setFilExpense([...newExpense]);
+
+  var deleteExpense = async (id) => {
+    setSearch(false);
+    console.log(expense);
+    await api.delete(`/expenses/${id}`);
+    // exp();
+    const del = expense.filter((expense) => {
+      if (expense.id !== id) {
+        return expense;
+      }
+    });
+    setSearch(false);
+    setExpense(del);
+    console.log(del);
+    setFilExpense(del);
   };
   const yearToFilter = (event) => {
     setSearch(false);
@@ -83,18 +92,21 @@ export default function App() {
     setFilExpense(filteredArr);
   };
 
-  const searchTitle = (event) => {
+  const searchTitle = async (event) => {
     event.preventDefault();
+    // setLoadSpen(false)
     setSearch(true);
     setSearchItem(event.target.value);
     let searchword = event.target.value.split(" ").join("").toLowerCase();
+
     let search = expense.filter((expense) => {
       if (expense.title.toLowerCase().includes(searchword)) return expense;
       else return;
     });
-    setFilExpense(search);
+    console.log(search);
+    await setFilExpense(search);
+    // setLoadSpen(false)
     setSearch(false);
-    event.current.value = "";
   };
   return (
     <div className="table">
@@ -105,11 +117,7 @@ export default function App() {
         <Route path="/home" element={<App />}></Route>
         <Route
           path="/add-spendings"
-          element={
-            <AddSpendings
-              onAddSpendings={addNewSpendings}
-            />
-          }
+          element={<AddSpendings onAddSpendings={addNewSpendings} />}
         ></Route>
       </Routes>
       <div className="ulBlock" id="navbar">
@@ -138,21 +146,23 @@ export default function App() {
           </button>
         )}
       </div> */}
-      <hr className="hr" />
+      {/* <hr className="hr" /> */}
       {/* <form className="searchField" onSubmit={searchTitle}> */}
 
       {/* <button className="button" type="submit"> Search</button> */}
       {/* </form> */}
+      {/* {loadSpen && filExpense.length <= 0 && <h1  className="alertbox hei">Loading ...</h1>} */}
       {filExpense.length <= 0 && (
         <div className="alertbox hei">
           <h1>No Expenses found</h1>
         </div>
       )}
-      {!search &&
+      {!search  &&
         filExpense.map((expenses, index) => (
           <Spendings
-            index={index}
             key={expenses.id}
+            index={index}
+            id={expenses.id}
             title={expenses.title}
             cash={expenses.amount}
             date={expenses.date}
