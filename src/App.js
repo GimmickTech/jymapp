@@ -122,7 +122,7 @@ export default function App() {
           element={<AddSpendings onAddSpendings={addNewSpendings} />}
         ></Route>
       </Routes>
-      <div className="ulBlock" id="navbar">
+      <div className="ulBlock " id="navbar">
         <p className="liBlock">Date</p>
         <p className="liBlock">Spendings</p>
         <p className="liBlock">Amount</p>

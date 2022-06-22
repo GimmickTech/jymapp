@@ -11,11 +11,20 @@
   width: auto;
  
 }
+.table{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .ulBlock{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position:sticky;
   top:0; 
   z-index: 1;
-  width: auto;
+  width: 75%;
 }
 .liBlock,li , .Route {
   background-color: rgb(4, 4, 4);
@@ -24,6 +33,10 @@
   align-items: center;
   gap: 15px;
   font-size: 1rem;
+  border-radius: 5px;
+}
+.liBlock{
+  width: 100%;
 }
 .inpSearch{
   background-color: aliceblue;
